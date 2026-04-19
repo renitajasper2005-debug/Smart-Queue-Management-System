@@ -1,0 +1,26 @@
+[
+  {
+    "name": "General Consultation",
+    "duration_minutes": 15
+  },
+  {
+    "name": "Follow-up",
+    "duration_minutes": 10
+  },
+  {
+    "name": "Lab Test",
+    "duration_minutes": 12
+  },
+  {
+    "name": "Specialist",
+    "duration_minutes": 20
+  },
+  {
+    "name": "Emergency",
+    "duration_minutes": 30
+  },
+  {
+    "name": "General",
+    "duration_minutes": 12
+  }
+]

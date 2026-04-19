@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>QR Check-in — SmartQueue</title>
+  <meta name="description" content="Check in using your appointment ID or QR code." />
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <nav>
+    <a class="nav-brand" href="/"><span class="dot"></span> SmartQueue</a>
+    <div class="nav-links">
+      <a href="/booking">Book</a>
+      <a href="/walkin">Walk-in</a>
+      <a href="/queue">Queue</a>
+      <a href="/checkin" class="active">Check-in</a>
+      <a href="/dashboard">Admin</a>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class="page-header fade-in">
+      <h1>📲 QR <span class="gradient-text">Check-in</span></h1>
+      <p>Enter your Appointment ID (shown on your QR code) to mark your arrival.</p>
+    </div>
+
+    <div class="card fade-in" style="animation-delay:.1s">
+      <div class="card-title">🔍 Enter Appointment ID</div>
+      <form id="checkin-form" autocomplete="off">
+        <div class="form-group">
+          <label for="checkin-id">Appointment ID</label>
+          <input
+            type="text"
+            id="checkin-id"
+            placeholder="e.g. A1B2C3D4"
+            maxlength="8"
+            style="text-transform:uppercase;font-family:monospace;font-size:1.1rem;letter-spacing:.1em"
+            required
+          />
+        </div>
+        <button type="submit" class="btn btn-primary btn-full">✦ Check In</button>
+      </form>
+    </div>
+
+    <!-- Result -->
+    <div id="checkin-result" style="display:none;margin-top:1.5rem;animation:fadeIn .4s ease">
+      <div class="alert alert-success" style="text-align:center">
+        <div style="font-size:2rem;margin-bottom:.5rem">✅</div>
+        <div style="font-size:1.2rem;font-weight:700;margin-bottom:.25rem" id="ci-name">—</div>
+        <div style="font-size:.85rem;color:var(--muted)" id="ci-service">—</div>
+        <div style="margin-top:.75rem">
+          Status: <span class="chip chip-arrived" id="ci-status">arrived</span>
+        </div>
+      </div>
+      <div style="text-align:center;margin-top:1rem">
+        <a href="/queue" class="btn btn-secondary btn-sm">📋 View Queue</a>
+      </div>
+    </div>
+
+    <hr class="divider" />
+
+    <!-- Info panel -->
+    <div class="card fade-in" style="animation-delay:.2s">
+      <div class="card-title">ℹ️ How it works</div>
+      <ol style="padding-left:1.2rem;color:var(--muted);font-size:.9rem;line-height:2">
+        <li>Book an appointment → receive a QR code with a unique ID</li>
+        <li>Arrive at the venue and have staff scan your QR <em>or</em> enter your ID here</li>
+        <li>Your status instantly updates to <strong style="color:var(--accent3)">arrived</strong></li>
+        <li>Staff completes your appointment → status becomes <strong style="color:var(--green)">completed</strong></li>
+      </ol>
+    </div>
+  </div>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

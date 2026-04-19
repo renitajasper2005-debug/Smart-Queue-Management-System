@@ -1,0 +1,115 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard - SmartQueue</title>
+  <meta name="description" content="Admin panel to manage appointments, walk-ins, and queue actions." />
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <nav>
+    <a class="nav-brand" href="/"><span class="dot"></span> SmartQueue</a>
+    <div class="nav-links">
+      <a href="/booking">Book</a>
+      <a href="/walkin">Walk-in</a>
+      <a href="/queue">Queue</a>
+      <a href="/checkin">Check-in</a>
+      <a href="/dashboard" class="active">Admin</a>
+    </div>
+  </nav>
+
+  <div class="container-wide">
+    <div class="page-header fade-in">
+      <h1>Admin <span class="gradient-text">Dashboard</span></h1>
+      <p>Full queue control - check-in, complete, or mark appointments as missed. Auto-refreshes every 5 seconds.</p>
+    </div>
+
+    <div class="stats-grid fade-in" style="animation-delay:.05s">
+      <div class="stat-card">
+        <div class="stat-number" id="stat-total" style="color:var(--text)">-</div>
+        <div class="stat-label">Total</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" id="stat-waiting" style="color:var(--yellow)">-</div>
+        <div class="stat-label">Waiting</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" id="stat-arrived" style="color:var(--accent3)">-</div>
+        <div class="stat-label">Arrived</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" id="stat-completed" style="color:var(--green)">-</div>
+        <div class="stat-label">Completed</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" id="stat-service-mins" style="color:var(--accent2)">-</div>
+        <div class="stat-label">Avg Service (min)</div>
+      </div>
+    </div>
+
+    <div class="card fade-in" style="animation-delay:.08s">
+      <div class="card-title">Next Notification</div>
+      <div id="next-up-card" style="color:var(--muted)">Waiting for queue data...</div>
+    </div>
+
+    <div class="card fade-in" style="animation-delay:.09s">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:.75rem;flex-wrap:wrap">
+        <div class="card-title" style="margin:0">Service Durations</div>
+        <button class="btn btn-secondary btn-sm" id="save-services-btn">Save Durations</button>
+      </div>
+      <p style="color:var(--muted);margin:.5rem 0 1rem 0">
+        These timings drive queue prediction and ETA calculations for every patient.
+      </p>
+      <div id="service-editor" class="service-editor">
+        <div style="color:var(--muted)">Loading services...</div>
+      </div>
+    </div>
+
+    <div class="card fade-in" style="animation-delay:.1s;padding:0;overflow:hidden">
+      <div style="padding:1.25rem 1.5rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.75rem">
+        <div class="card-title" style="margin:0">All Records</div>
+        <div style="display:flex;gap:.5rem">
+          <button class="btn btn-secondary btn-sm" onclick="loadAdminQueue()">Refresh</button>
+          <a href="/booking" class="btn btn-primary btn-sm">+ Book</a>
+          <a href="/walkin" class="btn btn-secondary btn-sm">+ Walk-in</a>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Type</th>
+              <th>Service</th>
+              <th>Date / Time</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="admin-tbody">
+            <tr>
+              <td colspan="7" style="text-align:center;color:var(--muted);padding:2rem">
+                <span class="spinner"></span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="card fade-in" style="animation-delay:.2s;margin-top:1rem">
+      <div class="card-title">Status Legend</div>
+      <div style="display:flex;gap:1rem;flex-wrap:wrap;font-size:.85rem">
+        <div><span class="chip chip-waiting">waiting</span> In queue, not yet arrived</div>
+        <div><span class="chip chip-arrived">arrived</span> Checked in at venue</div>
+        <div><span class="chip chip-completed">completed</span> Service done</div>
+        <div><span class="chip chip-missed">missed</span> Did not arrive - slot may be reassigned</div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
