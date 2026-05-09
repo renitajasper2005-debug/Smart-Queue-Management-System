@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SmartQueue — Intelligent Appointment System</title>
+  <meta name="description" content="Book appointments, register walk-ins, and track your queue position in real time." />
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <nav>
+    <a class="nav-brand" href="/">
+      <span class="dot"></span> SmartQueue
+    </a>
+    <div class="nav-links">
+      <a href="/booking">Book</a>
+      <a href="/walkin">Walk-in</a>
+      <a href="/queue">Queue</a>
+      <a href="/checkin">Check-in</a>
+      <a href="/dashboard">Admin</a>
+    </div>
+  </nav>
+
+  <div class="hero container">
+    <h1>Smart Queue &amp;<br><span class="gradient-text">Appointment System</span></h1>
+    <p>Real-time queue management with QR-based check-in, dynamic walk-in slot filling, and instant status updates.</p>
+    <div class="hero-actions">
+      <a href="/booking" class="btn btn-primary">✦ Book Appointment</a>
+      <a href="/walkin"  class="btn btn-secondary">🚶 Walk-in</a>
+      <a href="/queue"   class="btn btn-secondary">📋 View Queue</a>
+    </div>
+
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">📅</div>
+        <h3>Appointment Booking</h3>
+        <p>Schedule visits in advance with a unique QR code generated instantly.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🚶</div>
+        <h3>Walk-in Registration</h3>
+        <p>On-the-spot registration with automatic gap-filling logic.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📲</div>
+        <h3>QR Check-in</h3>
+        <p>Scan your QR on arrival — status updates instantly across the system.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📊</div>
+        <h3>Live Queue View</h3>
+        <p>Real-time position tracking that refreshes every 5 seconds.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🤖</div>
+        <h3>AI-Assisted Dev</h3>
+        <p>Built with Antigravity — an AI development layer for faster, smarter code.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">⚡</div>
+        <h3>FIFO Gap Detection</h3>
+        <p>Missed slots are auto-detected and assigned to next available walk-ins.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Architecture banner -->
+  <div class="container" style="padding-top:0">
+    <div class="card" style="text-align:center;padding:2rem">
+      <p style="font-size:.75rem;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:1rem">System Architecture</p>
+      <div style="display:flex;align-items:center;justify-content:center;gap:.5rem;flex-wrap:wrap;font-size:.9rem;font-weight:600">
+        <span style="background:rgba(34,197,94,.15);color:#22c55e;padding:6px 14px;border-radius:999px">Frontend UI</span>
+        <span style="color:var(--muted)">→</span>
+        <span style="background:rgba(56,189,248,.15);color:var(--accent3);padding:6px 14px;border-radius:999px">Flask API</span>
+        <span style="color:var(--muted)">→</span>
+        <span style="background:rgba(245,158,11,.15);color:var(--yellow);padding:6px 14px;border-radius:999px">Queue Logic</span>
+        <span style="color:var(--muted)">→</span>
+        <span style="background:rgba(108,71,255,.15);color:var(--accent2);padding:6px 14px;border-radius:999px">MongoDB</span>
+        <span style="color:var(--muted)">→</span>
+        <span style="background:rgba(239,68,68,.15);color:var(--red);padding:6px 14px;border-radius:999px">Response UI</span>
+      </div>
+    </div>
+  </div>
+
+  <footer style="text-align:center;padding:2rem;color:var(--muted);font-size:.8rem;position:relative;z-index:1">
+    SmartQueue — built with Flask + MongoDB + Antigravity AI
+  </footer>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

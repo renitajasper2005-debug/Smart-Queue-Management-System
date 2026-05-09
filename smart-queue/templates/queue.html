@@ -1,0 +1,76 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Queue Status - SmartQueue</title>
+  <meta name="description" content="Live queue status - see your position and waiting time in real time." />
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <nav>
+    <a class="nav-brand" href="/"><span class="dot"></span> SmartQueue</a>
+    <div class="nav-links">
+      <a href="/booking">Book</a>
+      <a href="/walkin">Walk-in</a>
+      <a href="/queue" class="active">Queue</a>
+      <a href="/checkin">Check-in</a>
+      <a href="/dashboard">Admin</a>
+    </div>
+  </nav>
+
+  <div class="container-wide">
+    <div class="page-header fade-in">
+      <h1>Live <span class="gradient-text">Queue Status</span></h1>
+      <p>Auto-refreshes every 5 seconds · <span id="last-updated" style="color:var(--muted)">-</span></p>
+    </div>
+
+    <div class="stats-grid fade-in" style="animation-delay:.1s">
+      <div class="stat-card">
+        <div class="stat-number" id="stat-total" style="color:var(--text)">-</div>
+        <div class="stat-label">Total</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" id="stat-waiting" style="color:var(--yellow)">-</div>
+        <div class="stat-label">Waiting</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" id="stat-arrived" style="color:var(--accent3)">-</div>
+        <div class="stat-label">Arrived</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" id="stat-completed" style="color:var(--green)">-</div>
+        <div class="stat-label">Completed</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" id="stat-service-mins" style="color:var(--accent2)">-</div>
+        <div class="stat-label">Avg Service (min)</div>
+      </div>
+    </div>
+
+    <div class="card fade-in" style="animation-delay:.15s">
+      <div class="card-title">Next Up</div>
+      <div id="next-up-banner" style="color:var(--muted)">Waiting for queue data...</div>
+    </div>
+
+    <div id="queue-list">
+      <div class="empty-state">
+        <div class="emoji">...</div>
+        <p>Loading queue...</p>
+      </div>
+    </div>
+  </div>
+
+  <script src="/static/app.js"></script>
+  <script>
+    const origLoad = loadQueue;
+    async function loadQueue() {
+      await origLoad();
+      const el = document.getElementById('last-updated');
+      if (el) el.textContent = 'Updated ' + new Date().toLocaleTimeString();
+    }
+    loadQueue();
+    setInterval(loadQueue, 5000);
+  </script>
+</body>
+</html>

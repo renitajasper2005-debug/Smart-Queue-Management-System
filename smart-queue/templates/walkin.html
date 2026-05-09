@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Walk-in — SmartQueue</title>
+  <meta name="description" content="Register as a walk-in visitor and get your queue token." />
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <nav>
+    <a class="nav-brand" href="/"><span class="dot"></span> SmartQueue</a>
+    <div class="nav-links">
+      <a href="/booking">Book</a>
+      <a href="/walkin" class="active">Walk-in</a>
+      <a href="/queue">Queue</a>
+      <a href="/checkin">Check-in</a>
+      <a href="/dashboard">Admin</a>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class="page-header fade-in">
+      <h1>🚶 Walk-in <span class="gradient-text">Registration</span></h1>
+      <p>No appointment? No problem. Register as a walk-in and we'll fit you into available slots automatically.</p>
+    </div>
+
+    <!-- Info banner -->
+    <div class="alert alert-info fade-in" style="animation-delay:.05s">
+      ⚡ Walk-ins are automatically assigned to gaps left by missed appointments using our FIFO queue logic.
+    </div>
+
+    <div class="card fade-in" style="animation-delay:.1s">
+      <div class="card-title">🎟️ Walk-in Details</div>
+      <form id="walkin-form" autocomplete="off">
+        <div class="form-group">
+          <label for="wk-name">Full Name *</label>
+          <input type="text" id="wk-name" placeholder="e.g. Alex Kumar" required />
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="wk-service">Service</label>
+            <select id="wk-service">
+              <option value="General">General</option>
+              <option value="Follow-up">Follow-up</option>
+              <option value="Lab Test">Lab Test</option>
+              <option value="Specialist">Specialist</option>
+              <option value="Emergency">Emergency</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="wk-phone">Phone (optional)</label>
+            <input type="tel" id="wk-phone" placeholder="+91 9876543210" />
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-full" style="margin-top:.5rem">
+          ✦ Register Walk-in
+        </button>
+      </form>
+    </div>
+
+    <!-- Result box -->
+    <div id="walkin-result" style="display:none;text-align:center;padding:1.5rem;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);margin-top:1.5rem;animation:fadeIn .4s ease">
+      <p style="font-size:.8rem;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.5rem">Your Queue Token</p>
+      <div class="qr-id" id="wk-id">——</div>
+      <div style="margin-top:.75rem;font-weight:700;font-size:1.1rem" id="wk-rname"></div>
+      <p style="margin-top:.5rem;font-size:.85rem;color:var(--muted)">Keep this token. Staff will call you when your turn arrives.</p>
+      <div style="margin-top:1rem;display:flex;gap:.75rem;justify-content:center">
+        <a href="/queue" class="btn btn-secondary btn-sm">📋 View Queue</a>
+      </div>
+    </div>
+  </div>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

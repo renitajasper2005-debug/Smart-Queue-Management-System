@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Book Appointment — SmartQueue</title>
+  <meta name="description" content="Book an appointment and receive a QR code for check-in." />
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <nav>
+    <a class="nav-brand" href="/"><span class="dot"></span> SmartQueue</a>
+    <div class="nav-links">
+      <a href="/booking" class="active">Book</a>
+      <a href="/walkin">Walk-in</a>
+      <a href="/queue">Queue</a>
+      <a href="/checkin">Check-in</a>
+      <a href="/dashboard">Admin</a>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class="page-header fade-in">
+      <h1>📅 Book an <span class="gradient-text">Appointment</span></h1>
+      <p>Fill in the details below. You'll receive a unique QR code for check-in on arrival.</p>
+    </div>
+
+    <div class="card fade-in" style="animation-delay:.1s">
+      <div class="card-title">📝 Appointment Details</div>
+      <form id="booking-form" autocomplete="off">
+        <div class="form-group">
+          <label for="name">Full Name *</label>
+          <input type="text" id="name" placeholder="e.g. Renita Sharma" required />
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="date">Date *</label>
+            <input type="date" id="date" required />
+          </div>
+          <div class="form-group">
+            <label for="time">Time *</label>
+            <input type="time" id="time" required />
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="service">Service *</label>
+            <select id="service" required>
+              <option value="">Select service</option>
+              <option value="General Consultation">General Consultation</option>
+              <option value="Follow-up">Follow-up</option>
+              <option value="Lab Test">Lab Test</option>
+              <option value="Specialist">Specialist</option>
+              <option value="Emergency">Emergency</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="phone">Phone (optional)</label>
+            <input type="tel" id="phone" placeholder="+91 9876543210" />
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-full" style="margin-top:.5rem">
+          ✦ Book Appointment
+        </button>
+      </form>
+    </div>
+
+    <div class="card fade-in" style="animation-delay:.15s;margin-top:1rem">
+      <div class="card-title">Update Existing Booking</div>
+      <p style="color:var(--muted);margin-bottom:1rem">
+        Enter your appointment ID to load and edit your booking details.
+      </p>
+
+      <form id="manage-lookup-form" autocomplete="off">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="manage-id">Appointment ID</label>
+            <input type="text" id="manage-id" placeholder="e.g. A1B2C3D4" maxlength="8" style="text-transform:uppercase" required />
+          </div>
+          <div class="form-group" style="display:flex;align-items:flex-end">
+            <button type="submit" class="btn btn-secondary btn-full">Load Booking</button>
+          </div>
+        </div>
+      </form>
+
+      <form id="manage-form" autocomplete="off" style="display:none;margin-top:1rem">
+        <div class="form-group">
+          <label for="manage-name">Full Name</label>
+          <input type="text" id="manage-name" required />
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="manage-date">Date</label>
+            <input type="date" id="manage-date" required />
+          </div>
+          <div class="form-group">
+            <label for="manage-time">Time</label>
+            <input type="time" id="manage-time" required />
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="manage-service">Service</label>
+            <select id="manage-service" required>
+              <option value="">Select service</option>
+              <option value="General Consultation">General Consultation</option>
+              <option value="Follow-up">Follow-up</option>
+              <option value="Lab Test">Lab Test</option>
+              <option value="Specialist">Specialist</option>
+              <option value="Emergency">Emergency</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="manage-phone">Phone</label>
+            <input type="tel" id="manage-phone" placeholder="+91 9876543210" />
+          </div>
+        </div>
+
+        <div id="manage-summary" class="alert alert-info" style="display:none"></div>
+
+        <button type="submit" class="btn btn-primary btn-full">Save Changes</button>
+      </form>
+    </div>
+
+
+    <!-- QR Result -->
+    <div class="qr-result" id="qr-result">
+      <p style="font-size:.8rem;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.5rem">Your Appointment ID</p>
+      <div class="qr-id" id="qr-id">——</div>
+      <img id="qr-img" src="" alt="QR Code" />
+      <div style="margin-bottom:.25rem;font-weight:700" id="qr-name"></div>
+      <div style="font-size:.85rem;color:var(--muted)" id="qr-service"></div>
+      <div style="font-size:.85rem;color:var(--muted);margin-bottom:1rem" id="qr-datetime"></div>
+      <p style="font-size:.8rem;color:var(--muted)">📲 Show this QR code at the reception counter for check-in.</p>
+      <div style="margin-top:1rem;display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap">
+        <a id="qr-download" href="#" class="btn btn-secondary btn-sm" download>⬇ Download QR</a>
+        <a href="/queue" class="btn btn-secondary btn-sm">📋 View Queue</a>
+      </div>
+    </div>
+  </div>
+
+  <script src="/static/app.js"></script>
+  <script>
+    // Set min date to today
+    document.getElementById('date').min = new Date().toISOString().split('T')[0];
+
+    // Wire download button
+    document.getElementById('qr-img').addEventListener('load', function() {
+      const dl = document.getElementById('qr-download');
+      dl.href = this.src;
+      dl.download = 'smartqueue-qr.png';
+    });
+  </script>
+</body>
+</html>
