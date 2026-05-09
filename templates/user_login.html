@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SmartQueue</title>
+  <meta name="description" content="User sign in and account creation for SmartQueue." />
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <div class="auth-shell">
+    <div class="auth-card fade-in">
+      <div class="auth-eyebrow">Patient Portal</div>
+      <h1>SmartQueue</h1>
+      <p class="auth-copy">Sign in with your email or create a new patient account to manage bookings and receive notifications.</p>
+
+      {% if error %}
+      <div class="alert alert-error">{{ error }}</div>
+      {% endif %}
+
+      <div class="auth-mode-switch">
+        <button type="button" class="auth-mode-btn {% if selected_mode != 'signup' %}active{% endif %}" data-auth-mode="login">Login</button>
+        <button type="button" class="auth-mode-btn {% if selected_mode == 'signup' %}active{% endif %}" data-auth-mode="signup">Create Account</button>
+      </div>
+
+      <form method="post" class="auth-form" autocomplete="off">
+        <input type="hidden" name="mode" id="auth-mode-input" value="{{ selected_mode or 'login' }}" />
+
+        <div class="form-group auth-signup-only" {% if selected_mode != 'signup' %}style="display:none"{% endif %}>
+          <label for="name">Full Name</label>
+          <input type="text" id="name" name="name" placeholder="Enter your name" value="{{ request.form.get('name', '') }}" />
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" placeholder="name@example.com" value="{{ request.form.get('email', current_user_email or '') }}" required />
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" placeholder="Enter password" minlength="6" required />
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-full" id="auth-submit-btn">
+          {% if selected_mode == 'signup' %}Create Account{% else %}Login{% endif %}
+        </button>
+      </form>
+
+      <div class="auth-footer">
+        Need staff access?
+        <a href="/login/admin">Open admin login</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const authModeButtons = document.querySelectorAll('[data-auth-mode]');
+    const authModeInput = document.getElementById('auth-mode-input');
+    const authSubmitButton = document.getElementById('auth-submit-btn');
+    const signupOnlyFields = document.querySelectorAll('.auth-signup-only');
+
+    function setAuthMode(mode) {
+      authModeInput.value = mode;
+      authModeButtons.forEach((button) => {
+        button.classList.toggle('active', button.dataset.authMode === mode);
+      });
+      signupOnlyFields.forEach((field) => {
+        field.style.display = mode === 'signup' ? 'block' : 'none';
+      });
+      authSubmitButton.textContent = mode === 'signup' ? 'Create Account' : 'Login';
+    }
+
+    authModeButtons.forEach((button) => {
+      button.addEventListener('click', () => setAuthMode(button.dataset.authMode));
+    });
+
+    setAuthMode(authModeInput.value || 'login');
+  </script>
+</body>
+</html>

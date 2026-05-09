@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Login - SmartQueue</title>
+  <meta name="description" content="Admin login for SmartQueue dashboard, QR check-in, and queue operations." />
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <nav>
+    <a class="nav-brand" href="/"><span class="dot"></span> SmartQueue</a>
+    <div class="nav-links">
+      <a href="/login/admin" class="active">Admin Login</a>
+      <a href="/checkin">Admin Scan</a>
+      <a href="/dashboard">Admin</a>
+    </div>
+  </nav>
+
+  <div class="auth-shell auth-shell-admin">
+    <div class="auth-card auth-card-admin fade-in">
+      <div class="auth-eyebrow">Staff Access</div>
+      <h1>Admin Login</h1>
+      <p class="auth-copy">Sign in to manage queue flow, scan QR check-ins, update service durations, and trigger patient notifications.</p>
+
+      {% if error %}
+      <div class="alert alert-error">{{ error }}</div>
+      {% endif %}
+
+      <form method="post" class="auth-form" autocomplete="off">
+        <div class="form-group">
+          <label for="username">Admin Username</label>
+          <input type="text" id="username" name="username" placeholder="Enter admin username" required />
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" placeholder="Enter password" required />
+        </div>
+        <button type="submit" class="btn btn-primary btn-full">Login as Admin</button>
+      </form>
+
+    </div>
+  </div>
+</body>
+</html>

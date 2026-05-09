@@ -1,0 +1,12 @@
+[
+  {
+    "email": "renitajasper2005@gmail.com",
+    "name": "Renita Jasper",
+    "password_hash": "scrypt:32768:8:1$XrxB1eiSZd3xfHGa$8634d38df0b71b80edaf04f720596350ee4b4b5f31272c1e2b83b280d8bc1574652e94e9adb7a0bc888131ba0a9e1d1351fa37e6cb500351c3987f3860aa5e64"
+  },
+  {
+    "email": "renitajasper2005@gmail",
+    "name": "Renita",
+    "password_hash": "scrypt:32768:8:1$UBMW51gJIEfp2Ryd$d3703e8597a5784bdedd524a51985bb9226b7a2e2a1f1cdafa32a945676baa4d4335cea72dd4c65d6eeac51f5e6c3c44092ced93ca69ae2827a049dbe669dd1d"
+  }
+]

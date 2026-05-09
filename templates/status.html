@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Status - SmartQueue</title>
+  <meta name="description" content="Patients can check whether they have been accepted to see the doctor." />
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <nav>
+    <a class="nav-brand" href="/"><span class="dot"></span> SmartQueue</a>
+    <div class="nav-links">
+      <a href="/booking">Book</a>
+      <a href="/my-bookings">My Bookings</a>
+      <a href="/walkin">Walk-in</a>
+      <a href="/queue">Queue</a>
+      <a href="/status" class="active">My Status</a>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class="page-header fade-in">
+      <h1>Patient <span class="gradient-text">Status</span></h1>
+      <p>Your booking and walk-in statuses appear here automatically for this logged-in account.</p>
+    </div>
+
+    <div id="status-list" class="saved-bookings-grid">
+      <div class="empty-state">
+        <div class="emoji">...</div>
+        <p>Loading your statuses...</p>
+      </div>
+    </div>
+  </div>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

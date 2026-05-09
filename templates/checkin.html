@@ -1,0 +1,123 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Scan - SmartQueue</title>
+  <meta name="description" content="Admin QR scanning and patient acceptance." />
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <nav>
+    <a class="nav-brand" href="/"><span class="dot"></span> SmartQueue</a>
+    <div class="nav-links">
+      <a href="/login/admin">Admin Login</a>
+      <a href="/checkin" class="active">Admin Scan</a>
+      <a href="/dashboard">Admin</a>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class="page-header fade-in">
+      <h1>Admin <span class="gradient-text">QR Scan</span></h1>
+      <p>Scan the patient QR or enter the appointment ID to load details, then choose the action manually.</p>
+    </div>
+
+    <div class="card fade-in" style="animation-delay:.1s">
+      <div class="card-title">Scan QR</div>
+      <div class="scanner-panel">
+        <div class="scanner-video-wrap">
+          <video id="scanner-video" class="scanner-video" playsinline muted></video>
+          <div id="scanner-placeholder" class="scanner-placeholder">
+            Start the camera and point it at the patient's QR code.
+          </div>
+        </div>
+        <div class="scanner-actions">
+          <button type="button" id="start-scan-btn" class="btn btn-primary">Start Camera Scan</button>
+          <button type="button" id="stop-scan-btn" class="btn btn-secondary" disabled>Stop Scan</button>
+          <label for="scan-image-input" class="btn btn-secondary">Scan from Photo</label>
+          <input type="file" id="scan-image-input" accept="image/*" capture="environment" hidden />
+        </div>
+        <div id="scanner-status" class="scanner-status">
+          Camera scan works best in Chrome or Edge on a device with a camera. Manual ID entry still works below.
+        </div>
+      </div>
+    </div>
+
+    <div class="card fade-in" style="animation-delay:.15s">
+      <div class="card-title">Load Patient</div>
+      <form id="checkin-form" autocomplete="off">
+        <div class="form-group">
+          <label for="checkin-id">Appointment ID</label>
+          <input
+            type="text"
+            id="checkin-id"
+            placeholder="e.g. A1B2C3D4"
+            maxlength="8"
+            value="{{ record.id if record else record_id if record_id else '' }}"
+            style="text-transform:uppercase;font-family:monospace;font-size:1.1rem;letter-spacing:.1em"
+            required
+          />
+        </div>
+        <button type="submit" class="btn btn-primary btn-full">Load Patient Details</button>
+      </form>
+    </div>
+
+    <div id="checkin-result" style="display:{% if record %}block{% else %}none{% endif %};margin-top:1.5rem;animation:fadeIn .4s ease">
+      <div class="alert alert-info" style="text-align:center">
+        <div style="font-size:2rem;margin-bottom:.5rem">Patient</div>
+        <div style="font-size:1.2rem;font-weight:700;margin-bottom:.25rem" id="ci-name">{{ record.name if record else '-' }}</div>
+        <div style="font-size:.85rem;color:var(--muted)" id="ci-service">{{ record.service if record else '-' }}</div>
+        <div style="margin-top:.75rem">
+          Status: <span class="chip chip-{{ record.status if record else 'waiting' }}" id="ci-status">{{ record.status if record else 'waiting' }}</span>
+        </div>
+        <div style="margin-top:.65rem;color:var(--muted);font-size:.85rem" id="ci-detail">
+          {% if record %}
+          ID: <code>{{ record.id }}</code> | {{ record.date or '-' }} {{ record.time or '' }}
+          {% else %}
+          -
+          {% endif %}
+        </div>
+        <div style="margin-top:.75rem;font-weight:600" id="ci-message">{{ message if message else 'Accepted. Patient may go to the doctor.' }}</div>
+      </div>
+      {% if record %}
+      <div style="display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap;margin-top:1rem">
+        {% if record.status != "accepted" and record.status != "completed" and record.status != "missed" %}
+        <button type="button" class="btn btn-primary btn-sm" onclick="adminAction('{{ record.id }}','checkin')">Accept</button>
+        {% endif %}
+        {% if record.status != "completed" and record.status != "missed" %}
+        <button type="button" class="btn btn-success btn-sm" onclick="adminAction('{{ record.id }}','complete')">Complete</button>
+        {% endif %}
+        {% if record.status == "waiting" %}
+        <button type="button" class="btn btn-danger btn-sm" onclick="adminAction('{{ record.id }}','miss')">Reject / Miss</button>
+        {% endif %}
+        {% if record.status == "waiting" %}
+        <button type="button" class="btn btn-secondary btn-sm" onclick="adminAction('{{ record.id }}','notify_eta')">Send ETA</button>
+        {% endif %}
+        {% if record.status == "waiting" or record.status == "accepted" %}
+        <button type="button" class="btn btn-secondary btn-sm" onclick="adminAction('{{ record.id }}','notify_checkin')">Remind 10 min</button>
+        {% endif %}
+      </div>
+      {% endif %}
+      <div style="text-align:center;margin-top:1rem">
+        <a href="/dashboard" class="btn btn-secondary btn-sm">Open Admin Dashboard</a>
+      </div>
+    </div>
+
+    <hr class="divider" />
+
+    <div class="card fade-in" style="animation-delay:.2s">
+      <div class="card-title">How this works</div>
+      <ol style="padding-left:1.2rem;color:var(--muted);font-size:.9rem;line-height:2">
+        <li>Patient books and receives a QR with their appointment ID.</li>
+        <li>Admin scans the patient QR at reception.</li>
+        <li>The patient details load on screen for review.</li>
+        <li>Admin chooses to accept, reject, complete, or send reminders manually.</li>
+      </ol>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"></script>
+  <script src="/static/app.js"></script>
+</body>
+</html>

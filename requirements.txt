@@ -1,0 +1,6 @@
+flask
+flask-cors
+pymongo
+qrcode[pil]
+Pillow
+python-dotenv

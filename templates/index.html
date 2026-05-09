@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SmartQueue</title>
+  <meta name="description" content="SmartQueue access portal." />
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <div class="auth-shell">
+    <div class="auth-card fade-in" style="text-align:center">
+      <h1>SmartQueue</h1>
+      <p class="auth-copy">Choose how you want to enter the system.</p>
+
+      <div class="portal-actions" style="justify-content:center;margin-top:1.25rem">
+        <a href="/login/user" class="btn btn-primary">User Login</a>
+        <a href="/login/admin" class="btn btn-secondary">Admin Login</a>
+      </div>
+
+      {% if current_role != "guest" %}
+      <form method="post" action="/logout" style="margin-top:1rem">
+        <button type="submit" class="btn btn-secondary btn-sm">Logout</button>
+      </form>
+      {% endif %}
+    </div>
+  </div>
+</body>
+</html>
